@@ -1516,7 +1516,7 @@
   // ===================================
   
   // Google Sheets API URL
-  const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbydDHygHoBrjLmwmzy1YD3VlOlHo3TAGRfmMU02gWKxuLPcb3Ye640zZ_U3BFDr4b0k/exec';
+  const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzqyrMhEulqhNrDEVx4hzTaJQW08FWuEv3ZlNdFyP7Ho8SBwKN50dwggAKgk8_CdpfeCQ/exec';
 
   // 設定今天日期為預設值
   document.addEventListener('DOMContentLoaded', function() {
@@ -1570,25 +1570,28 @@
     };
 
     try {
+      // 用 Google Apps Script 的 redirect 方式送出
       const response = await fetch(SHEETS_API_URL, {
         method: 'POST',
-        mode: 'no-cors', // Important for Google Apps Script
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain;charset=utf-8',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        redirect: 'follow'
       });
 
-      // no-cors mode doesn't return readable response, so we assume success
-      alert('✅ 已新增！重新整理頁面查看更新。');
-      closeAddForm();
+      const result = await response.json();
       
-      // 可選：自動重新整理頁面
-      setTimeout(() => location.reload(), 1000);
+      if (result.success) {
+        alert('✅ 已新增！');
+        closeAddForm();
+      } else {
+        alert('❌ 寫入失敗：' + (result.error || '未知錯誤'));
+      }
 
     } catch (error) {
       console.error('Error:', error);
-      alert('❌ 送出失敗，請稍後再試');
+      alert('❌ 送出失敗，請稍後再試\n' + error.message);
     } finally {
       submitBtn.textContent = '送出';
       submitBtn.disabled = false;
