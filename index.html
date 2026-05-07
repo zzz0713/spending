@@ -568,6 +568,33 @@
   .tx-amount.expense { color: var(--accent2); }
   .tx-amount.income { color: var(--accent3); }
 
+  .tx-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .tx-item:hover .tx-actions {
+    opacity: 1;
+  }
+
+  .tx-action-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .tx-action-btn:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+    transform: scale(1.1);
+  }
+
   .tx-installment {
     font-size: 9px;
     color: var(--accent4);
@@ -975,30 +1002,30 @@
   <div class="big-number-section">
     <div class="big-card">
       <div class="big-card-label">本月還能花</div>
-      <div class="big-amount safe" id="remaining-total">$8,240</div>
+      <div class="big-amount safe" id="remaining-total">載入中...</div>
       <div class="big-sub">薪水扣掉固定支出 + 分期 + 已刷</div>
       <div class="progress-wrap">
         <div class="progress-labels">
-          <span>已用 38%</span>
-          <span>$13,260 已支出</span>
+          <span>已用 0%</span>
+          <span>$0 已支出</span>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill progress-safe" style="width: 38%"></div>
+          <div class="progress-fill progress-safe" style="width: 0%"></div>
         </div>
       </div>
     </div>
 
     <div class="big-card">
       <div class="big-card-label">今天的份額</div>
-      <div class="big-amount safe" id="daily-quota">$274</div>
-      <div class="big-sub">還剩 <span id="days-left">30</span> 天，平均每天可花</div>
+      <div class="big-amount safe" id="daily-quota">載入中...</div>
+      <div class="big-sub">還剩 <span id="days-left">--</span> 天，平均每天可花</div>
       <div class="progress-wrap">
         <div class="progress-labels">
-          <span>本月第 <span id="day-of-month">1</span> 天</span>
+          <span>本月第 <span id="day-of-month">--</span> 天</span>
           <span>帳單截止 5/25</span>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill progress-safe" style="width: 3%"></div>
+          <div class="progress-fill progress-safe" style="width: 0%"></div>
         </div>
       </div>
     </div>
@@ -1007,33 +1034,33 @@
   <!-- 本月統計 -->
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-count">12 餐</div>
-      <div class="stat-value" style="color: var(--text)">$3,240</div>
+      <div class="stat-count">-- 餐</div>
+      <div class="stat-value" style="color: var(--text)">$--</div>
       <div class="stat-label">日常飲食</div>
     </div>
     <div class="stat-card">
-      <div class="stat-count">4 餐</div>
-      <div class="stat-value" style="color: var(--accent2)">$2,800</div>
+      <div class="stat-count">-- 餐</div>
+      <div class="stat-value" style="color: var(--accent2)">$--</div>
       <div class="stat-label">口腹之慾</div>
     </div>
     <div class="stat-card">
-      <div class="stat-count">7 杯</div>
-      <div class="stat-value" style="color: var(--accent4)">$1,400</div>
+      <div class="stat-count">-- 杯</div>
+      <div class="stat-value" style="color: var(--accent4)">$--</div>
       <div class="stat-label">飲品</div>
     </div>
     <div class="stat-card">
       <div class="stat-count"> </div>
-      <div class="stat-value" style="color: var(--accent3)">$35,000</div>
+      <div class="stat-value" style="color: var(--accent3)">$--</div>
       <div class="stat-label">薪水</div>
     </div>
     <div class="stat-card">
       <div class="stat-count"> </div>
-      <div class="stat-value" style="color: var(--accent2)">$18,760</div>
+      <div class="stat-value" style="color: var(--accent2)">$--</div>
       <div class="stat-label">總支出</div>
     </div>
     <div class="stat-card">
       <div class="stat-count"> </div>
-      <div class="stat-value" style="color: var(--accent)">$2,400</div>
+      <div class="stat-value" style="color: var(--accent)">$--</div>
       <div class="stat-label">修身養性</div>
     </div>
   </div>
@@ -1042,77 +1069,8 @@
   <div class="section-title">近期收支</div>
   <p class="tip">💡 點右側表情標記這筆消費的狀態</p>
   <div class="tx-list" id="tx-list">
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">全聯福利中心</div>
-        <div class="tx-meta">05/02 · 中信卡</div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category">日用</span>
-      </div>
-      <div class="tx-mood selected" onclick="openMood(this)" title="標記這筆消費" data-mood="plan">🎯</div>
-      <div class="tx-amount expense">-$847</div>
-    </div>
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">某某牛排館</div>
-        <div class="tx-meta">05/01 · 台新卡</div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category cat-indulge">口腹之慾</span>
-        <span class="tx-tag-mood tag-impulse">🌊 情緒驅動</span>
-      </div>
-      <div class="tx-mood selected" onclick="openMood(this)" data-mood="impulse">🌊</div>
-      <div class="tx-amount expense">-$980</div>
-    </div>
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">某某書店</div>
-        <div class="tx-meta">05/01 · 台新卡</div>
-        <div><span class="tx-installment">分6期 每期 $216</span></div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category">購物</span>
-      </div>
-      <div class="tx-mood" onclick="openMood(this)" title="標記這筆消費">❓</div>
-      <div class="tx-amount expense">-$1,296</div>
-    </div>
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">家人轉帳（串流分攤）</div>
-        <div class="tx-meta">05/01 · Line Pay 收款</div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category cat-income">收入</span>
-      </div>
-      <div class="tx-mood" style="opacity:0.2; cursor:default">—</div>
-      <div class="tx-amount income">+$260</div>
-    </div>
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">手搖飲料店</div>
-        <div class="tx-meta">04/30 · 國泰卡</div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category cat-drink">飲品</span>
-      </div>
-      <div class="tx-mood" onclick="openMood(this)" title="標記這筆消費">❓</div>
-      <div class="tx-amount expense">-$75</div>
-    </div>
-
-    <div class="tx-item">
-      <div>
-        <div class="tx-merchant">捷運</div>
-        <div class="tx-meta">04/30 · 悠遊卡</div>
-      </div>
-      <div class="tx-tags">
-        <span class="tx-category">交通</span>
-      </div>
+    <div style="text-align:center;padding:40px;color:var(--text-dim);">載入中...</div>
+  </div>
       <div class="tx-mood" onclick="openMood(this)" title="標記這筆消費">❓</div>
       <div class="tx-amount expense">-$50</div>
     </div>
@@ -1133,33 +1091,7 @@
   <div class="section-title">分期中</div>
   <p class="tip">💡 做新的大額消費之前，先看這裡</p>
   <div class="installment-grid">
-    <div class="month-card current">
-      <div class="month-label">
-        <div class="current-dot"></div>
-        五月（本月）
-      </div>
-      <div class="month-amount" style="color: var(--accent4)">$3,260</div>
-      <div class="month-items">
-        <span class="month-item-tag">耳機 $1,000</span>
-        <span class="month-item-tag">電腦 $2,000</span>
-        <span class="month-item-tag">課程 $260</span>
-      </div>
-    </div>
-    <div class="month-card">
-      <div class="month-label">六月</div>
-      <div class="month-amount">$2,000</div>
-      <div class="month-items">
-        <span class="month-item-tag">耳機 $1,000</span>
-        <span class="month-item-tag">電腦 $1,000</span>
-      </div>
-    </div>
-    <div class="month-card">
-      <div class="month-label">七月</div>
-      <div class="month-amount" style="color: var(--safe)">$1,000</div>
-      <div class="month-items">
-        <span class="month-item-tag">耳機 $1,000</span>
-      </div>
-    </div>
+    <!-- 自動載入 -->
   </div>
 
   <!-- 訂閱紀錄 -->
@@ -1516,15 +1448,208 @@
   // ===================================
   
   // Google Sheets API URL
-  const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzqyrMhEulqhNrDEVx4hzTaJQW08FWuEv3ZlNdFyP7Ho8SBwKN50dwggAKgk8_CdpfeCQ/exec';
+  const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbwI7nlaL9v9F0LC_YVGDYK3nVUgs5mp09ubDeuFxS45HNW0xudyLxMyznN0LcQg6jv8LA/exec';
 
-  // 設定今天日期為預設值
+  // 設定今天日期為預設值 + 載入資料
   document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('input-date').value = today;
+    
+    // 載入 Google Sheets 資料
+    loadData();
   });
 
+  // 從 Google Sheets 載入資料
+  async function loadData() {
+    try {
+      const response = await fetch(SHEETS_API_URL);
+      const data = await response.json();
+      
+      // 更新儀表板數字
+      updateDashboard(data.dashboard);
+      
+      // 更新近期收支
+      updateTransactions(data.transactions);
+      
+      // 更新分期中
+      updateInstallments(data.installments);
+      
+    } catch (error) {
+      console.error('載入資料失敗:', error);
+    }
+  }
+
+  function updateDashboard(dashboard) {
+    const now = new Date();
+    const dayOfMonth = now.getDate();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+    const daysLeft = daysInMonth - dayOfMonth + 1;
+    
+    // 本月還能花
+    const remaining = dashboard['本月還能花'] || 0;
+    document.getElementById('remaining-total').textContent = `$${remaining.toLocaleString()}`;
+    
+    // 今天的份額
+    const dailyQuota = daysLeft > 0 ? Math.floor(remaining / daysLeft) : 0;
+    document.getElementById('daily-quota').textContent = `$${dailyQuota.toLocaleString()}`;
+    
+    // 顏色邏輯
+    const totalIncome = dashboard['本月薪水'] || 35000;
+    const ratio = remaining / totalIncome;
+    const amountEl = document.getElementById('remaining-total');
+    const dailyEl = document.getElementById('daily-quota');
+    const cls = ratio > 0.5 ? 'safe' : ratio > 0.2 ? 'warning' : 'danger';
+    amountEl.className = `big-amount ${cls}`;
+    dailyEl.className = `big-amount ${cls}`;
+    
+    // 更新剩餘天數
+    document.getElementById('days-left').textContent = daysLeft;
+    document.getElementById('day-of-month').textContent = dayOfMonth;
+    
+    // 更新進度條
+    const spent = (dashboard['本月總支出'] || 0);
+    const total = totalIncome;
+    const spentPercent = Math.round((spent / total) * 100);
+    document.querySelector('.progress-fill').style.width = spentPercent + '%';
+    document.querySelector('.progress-labels span:first-child').textContent = `已用 ${spentPercent}%`;
+    document.querySelector('.progress-labels span:last-child').textContent = `$${spent.toLocaleString()} 已支出`;
+    
+    // 更新統計卡
+    updateStatCard(0, dashboard['日常飲食_次數'], dashboard['日常飲食_金額'], '餐');
+    updateStatCard(1, dashboard['口腹之慾_次數'], dashboard['口腹之慾_金額'], '餐');
+    updateStatCard(2, dashboard['飲品_次數'], dashboard['飲品_金額'], '杯');
+    updateStatCard(3, null, dashboard['本月薪水'], null);
+    updateStatCard(4, null, dashboard['本月總支出'], null);
+    updateStatCard(5, null, dashboard['修身養性_金額'], null);
+    
+    // 更新衝動消費
+    const impulseAmount = dashboard['衝動消費_金額'] || 0;
+    const impulseCount = dashboard['衝動消費_筆數'] || 0;
+    document.querySelector('.impulse-amount').textContent = `$${impulseAmount.toLocaleString()}`;
+    document.querySelector('.impulse-desc').textContent = 
+      `${impulseCount}筆標記為「情緒驅動」，${impulseCount > 0 ? '多發生在深夜。' : ''}不是在評判你，只是讓你看到規律。`;
+  }
+
+  function updateStatCard(index, count, amount, unit) {
+    const cards = document.querySelectorAll('.stat-card');
+    const card = cards[index];
+    
+    const countEl = card.querySelector('.stat-count');
+    const valueEl = card.querySelector('.stat-value');
+    
+    if (count !== null && count !== undefined) {
+      countEl.textContent = `${count} ${unit}`;
+    } else {
+      countEl.textContent = ' ';
+    }
+    
+    valueEl.textContent = `$${(amount || 0).toLocaleString()}`;
+  }
+
+  function updateTransactions(transactions) {
+    const txList = document.getElementById('tx-list');
+    txList.innerHTML = ''; // 清空
+    
+    if (!transactions || transactions.length === 0) {
+      txList.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim);">還沒有消費記錄</div>';
+      return;
+    }
+    
+    transactions.forEach((tx, idx) => {
+      const item = document.createElement('div');
+      item.className = 'tx-item';
+      
+      const isIncome = tx.amount > 0;
+      const amountClass = isIncome ? 'income' : 'expense';
+      const amountPrefix = isIncome ? '+' : '';
+      
+      // 分類樣式
+      let categoryClass = 'tx-category';
+      if (tx.category === '口腹之慾') categoryClass += ' cat-indulge';
+      if (tx.category === '飲品') categoryClass += ' cat-drink';
+      if (tx.category === '收入') categoryClass += ' cat-income';
+      
+      // 情緒 tag
+      let moodTag = '';
+      let moodEmoji = '❓';
+      let moodClass = '';
+      if (tx.mood === '計畫內') { moodTag = '🎯 計畫內'; moodEmoji = '🎯'; moodClass = 'tag-plan'; }
+      if (tx.mood === '必要支出') { moodTag = '🧩 必要支出'; moodEmoji = '🧩'; moodClass = 'tag-need'; }
+      if (tx.mood === '情緒驅動') { moodTag = '🌊 情緒驅動'; moodEmoji = '🌊'; moodClass = 'tag-impulse'; }
+      if (tx.mood === '說不清楚') { moodTag = '🌫️ 說不清楚'; moodEmoji = '🌫️'; moodClass = 'tag-unknown'; }
+      
+      const moodSelected = tx.mood ? 'selected' : '';
+      
+      item.innerHTML = `
+        <div style="flex: 1; cursor: pointer;" onclick="editTransaction(${JSON.stringify(tx).replace(/"/g, '&quot;')})">
+          <div class="tx-merchant">${tx.merchant}</div>
+          <div class="tx-meta">${tx.date} · ${tx.card}</div>
+          ${tx.isInstallment ? `<div><span class="tx-installment">分${tx.installmentMonths}期 每期 $${Math.round(Math.abs(tx.amount) / tx.installmentMonths)}</span></div>` : ''}
+        </div>
+        <div class="tx-tags">
+          <span class="${categoryClass}">${tx.category}</span>
+          ${moodTag ? `<span class="tx-tag-mood ${moodClass}">${moodTag}</span>` : ''}
+        </div>
+        <div class="tx-actions">
+          <button class="tx-action-btn" onclick="event.stopPropagation(); editTransaction(${JSON.stringify(tx).replace(/"/g, '&quot;')})" title="編輯">✏️</button>
+          <button class="tx-action-btn" onclick="event.stopPropagation(); deleteTransaction(${tx.rowIndex}, '${tx.merchant}')" title="刪除">🗑️</button>
+        </div>
+        <div class="tx-amount ${amountClass}">${amountPrefix}$${Math.abs(tx.amount).toLocaleString()}</div>
+      `;
+      
+      txList.appendChild(item);
+    });
+  }
+
+  function updateInstallments(installments) {
+    const grid = document.querySelector('.installment-grid');
+    grid.innerHTML = ''; // 清空
+    
+    const today = new Date();
+    const months = [];
+    
+    // 生成本月+未來2個月
+    for (let i = 0; i < 3; i++) {
+      const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
+      const monthKey = `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+      months.push({
+        key: monthKey,
+        label: i === 0 ? `${d.getMonth() + 1}月（本月）` : `${d.getMonth() + 1}月`,
+        isCurrent: i === 0
+      });
+    }
+    
+    months.forEach(month => {
+      const data = installments[month.key] || { total: 0, items: [] };
+      
+      const card = document.createElement('div');
+      card.className = 'month-card' + (month.isCurrent ? ' current' : '');
+      
+      const itemTags = data.items.map(item => 
+        `<span class="month-item-tag">${item.item} $${item.amount.toLocaleString()}</span>`
+      ).join('');
+      
+      card.innerHTML = `
+        <div class="month-label">
+          ${month.isCurrent ? '<div class="current-dot"></div>' : ''}
+          ${month.label}
+        </div>
+        <div class="month-amount" style="color: ${data.total > 2000 ? 'var(--accent4)' : data.total > 0 ? 'var(--text)' : 'var(--safe)'}">\$${data.total.toLocaleString()}</div>
+        <div class="month-items">
+          ${itemTags || '<span style="color:var(--text-dim);font-size:11px;">無分期</span>'}
+        </div>
+      `;
+      
+      grid.appendChild(card);
+    });
+  }
+
   function openAddForm() {
+    // 清除編輯狀態，確保是新增模式
+    editingTransaction = null;
+    const submitBtn = document.querySelector('#transaction-form button[type="submit"]');
+    submitBtn.textContent = '送出';
+    
     document.getElementById('add-modal').classList.add('open');
     document.getElementById('input-merchant').focus();
   }
@@ -1533,6 +1658,12 @@
     document.getElementById('add-modal').classList.remove('open');
     document.getElementById('transaction-form').reset();
     document.getElementById('installment-fields').classList.remove('show');
+    
+    // 重設編輯狀態
+    editingTransaction = null;
+    const submitBtn = document.querySelector('#transaction-form button[type="submit"]');
+    submitBtn.textContent = '送出';
+    
     // 重設日期為今天
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('input-date').value = today;
@@ -1554,6 +1685,7 @@
     event.preventDefault();
     
     const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
     submitBtn.textContent = '送出中...';
     submitBtn.disabled = true;
 
@@ -1569,8 +1701,13 @@
       note: document.getElementById('input-note').value
     };
 
+    // 如果是編輯模式，加上 action 和 rowIndex
+    if (editingTransaction) {
+      data.action = 'update';
+      data.rowIndex = editingTransaction.rowIndex;
+    }
+
     try {
-      // 用 Google Apps Script 的 redirect 方式送出
       const response = await fetch(SHEETS_API_URL, {
         method: 'POST',
         headers: {
@@ -1583,17 +1720,18 @@
       const result = await response.json();
       
       if (result.success) {
-        alert('✅ 已新增！');
+        alert(editingTransaction ? '✅ 已更新' : '✅ 已新增');
         closeAddForm();
+        location.reload();
       } else {
-        alert('❌ 寫入失敗：' + (result.error || '未知錯誤'));
+        alert('❌ 失敗：' + (result.error || '未知錯誤'));
       }
 
     } catch (error) {
       console.error('Error:', error);
-      alert('❌ 送出失敗，請稍後再試\n' + error.message);
+      alert('❌ 送出失敗\n' + error.message);
     } finally {
-      submitBtn.textContent = '送出';
+      submitBtn.textContent = originalText;
       submitBtn.disabled = false;
     }
   }
@@ -1602,6 +1740,73 @@
   document.getElementById('add-modal').addEventListener('click', function(e) {
     if (e.target === this) closeAddForm();
   });
+
+  // ===================================
+  // 編輯和刪除功能
+  // ===================================
+  
+  let editingTransaction = null;
+
+  function editTransaction(tx) {
+    editingTransaction = tx;
+    
+    // 填入現有資料
+    document.getElementById('input-date').value = tx.date.replace(/\//g, '-');
+    document.getElementById('input-merchant').value = tx.merchant;
+    document.getElementById('input-amount').value = tx.amount;
+    document.getElementById('input-card').value = tx.card;
+    document.getElementById('input-category').value = tx.category;
+    document.getElementById('input-mood').value = tx.mood || '';
+    document.getElementById('input-installment').checked = tx.isInstallment;
+    document.getElementById('input-months').value = tx.installmentMonths || '';
+    document.getElementById('input-note').value = tx.note || '';
+    
+    // 顯示分期欄位
+    if (tx.isInstallment) {
+      document.getElementById('installment-fields').classList.add('show');
+      document.getElementById('input-months').required = true;
+    }
+    
+    // 改變送出按鈕文字
+    const submitBtn = document.querySelector('#transaction-form button[type="submit"]');
+    submitBtn.textContent = '更新';
+    
+    // 打開表單
+    document.getElementById('add-modal').classList.add('open');
+  }
+
+  async function deleteTransaction(rowIndex, merchantName) {
+    if (!confirm(`確定要刪除「${merchantName}」這筆記錄嗎？\n此動作無法復原。`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(SHEETS_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify({
+          action: 'delete',
+          rowIndex: rowIndex
+        }),
+        redirect: 'follow'
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('✅ 已刪除');
+        location.reload();
+      } else {
+        alert('❌ 刪除失敗：' + (result.error || '未知錯誤'));
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert('❌ 刪除失敗\n' + error.message);
+    }
+  }
 </script>
 </body>
 </html>
